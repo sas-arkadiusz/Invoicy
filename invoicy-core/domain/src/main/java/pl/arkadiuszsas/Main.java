@@ -1,4 +1,4 @@
-package com.invoicy;
+package pl.arkadiuszsas;
 
 public class Main {
     public static void main(String[] args) {

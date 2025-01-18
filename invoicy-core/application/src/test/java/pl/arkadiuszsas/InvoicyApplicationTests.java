@@ -1,4 +1,4 @@
-package com.invoicy;
+package pl.arkadiuszsas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
