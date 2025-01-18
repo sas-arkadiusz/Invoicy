@@ -8,7 +8,13 @@ import java.io.ByteArrayInputStream;
 @Service
 public class GenerateInvoicesFromCsvUseCase {
 
+    private final CustomersCsvReader customersCsvReader;
+
+    public GenerateInvoicesFromCsvUseCase(CustomersCsvReader customersCsvReader) {
+        this.customersCsvReader = customersCsvReader;
+    }
+
     public ByteArrayInputStream generateInvoicesFromCsv(MultipartFile customersForInvoice) {
-        return null;
+        return customersCsvReader.readCustomersDataFromCsv(customersForInvoice);
     }
 }
