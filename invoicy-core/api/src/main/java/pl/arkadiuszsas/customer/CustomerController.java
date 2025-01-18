@@ -1,6 +1,7 @@
 package pl.arkadiuszsas.customer;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,17 +13,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/customers")
-@RequiredArgsConstructor
 public class CustomerController {
 
     private final GenerateInvoicesFromCsvUseCase generateInvoicesFromCsvUseCase;
+
+    public CustomerController(GenerateInvoicesFromCsvUseCase generateInvoicesFromCsvUseCase) {
+        this.generateInvoicesFromCsvUseCase = generateInvoicesFromCsvUseCase;
+    }
 
     @PostMapping("/generate-invoices-from-csv")
     public ResponseEntity<byte[]> generateInvoicesFromCsv(@RequestParam("customersForInvoice") MultipartFile customersForInvoice) {
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=customers.pdf")
                 .contentType(MediaType.APPLICATION_PDF)
-                //.body(generateInvoicesFromCsvUseCase.generateInvoicesFromCsv(customersForInvoice).readAllBytes());
-                .body(null);
+                .body(generateInvoicesFromCsvUseCase.generateInvoicesFromCsv(customersForInvoice).readAllBytes());
     }
 }
