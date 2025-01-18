@@ -11,7 +11,8 @@
 	<groupId>pl.arkadiuszsas</groupId>
 	<artifactId>invoicy</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Invoicy</name>
+    <packaging>pom</packaging>
+    <name>Invoicy</name>
 	<description>A RESTful API for generating and managing invoices. This application allows users to create, retrieve, update, and delete invoices easily.</description>
 	<url/>
 	<licenses>
@@ -20,7 +21,12 @@
 	<developers>
 		<developer/>
 	</developers>
-	<scm>
+    <modules>
+        <module>api</module>
+		<module>application</module>
+		<module>domain</module>
+	</modules>
+    <scm>
 		<connection/>
 		<developerConnection/>
 		<tag/>
