@@ -16,7 +16,7 @@ public class CustomersCsvReader {
     public ByteArrayInputStream readCustomersDataFromCsv(MultipartFile customersForInvoice) {
         try (InputStreamReader reader = new InputStreamReader(customersForInvoice.getInputStream(), StandardCharsets.UTF_8);
              ByteArrayOutputStream out = new ByteArrayOutputStream();
-             CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(out), CSVFormat.DEFAULT.builder().setHeader("NUMER", "IMIE-NAZWISKO").get());
+             CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(out), CSVFormat.DEFAULT.builder().setHeader("NUMER", "IMIE-NAZWISKO", "ADRES-1").get());
              CSVParser csvParser = CSVParser.builder()
                      .setReader(reader)
                      .setFormat(CSVFormat.DEFAULT.builder().setHeader().setSkipHeaderRecord(true).get())
