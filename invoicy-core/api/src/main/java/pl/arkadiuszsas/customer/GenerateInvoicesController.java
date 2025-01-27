@@ -20,12 +20,9 @@ import pl.arkadiuszsas.customer.mapper.GenerateInvoicesMapper;
 public class GenerateInvoicesController {
 
     private final GenerateInvoicesFromRequestUseCase generateInvoicesFromRequestUseCase;
-    private final GenerateInvoicesMapper generateInvoicesMapper;
 
-    public GenerateInvoicesController(GenerateInvoicesFromRequestUseCase generateInvoicesFromRequestUseCase,
-                                      GenerateInvoicesMapper generateInvoicesMapper) {
+    public GenerateInvoicesController(GenerateInvoicesFromRequestUseCase generateInvoicesFromRequestUseCase) {
         this.generateInvoicesFromRequestUseCase = generateInvoicesFromRequestUseCase;
-        this.generateInvoicesMapper = generateInvoicesMapper;
     }
 
     @Operation(
@@ -40,11 +37,11 @@ public class GenerateInvoicesController {
     })
     @PostMapping("/generate-invoices")
     public ResponseEntity<GenerateInvoicesResponse> generateInvoicesFromRequest(@RequestBody GenerateInvoicesRequest request) {
-        var generatedInvoices = generateInvoicesFromRequestUseCase.generateInvoices(generateInvoicesMapper.toCommand(request));
+        var generatedInvoices = generateInvoicesFromRequestUseCase.generateInvoices(GenerateInvoicesMapper.INSTANCE.toCommand(request));
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=customers.pdf")
                 .contentType(MediaType.APPLICATION_PDF)
-                .body(generateInvoicesMapper.toResponse(generatedInvoices));
+                .body(GenerateInvoicesMapper.INSTANCE.toResponse(generatedInvoices));
     }
 
     @Operation(
