@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.arkadiuszsas.customer.dto.request.GenerateInvoicesRequest;
+import pl.arkadiuszsas.customer.dto.response.GenerateInvoicesResponse;
 import pl.arkadiuszsas.customer.mapper.GenerateInvoicesMapper;
 
 @RestController
@@ -38,12 +39,12 @@ public class GenerateInvoicesController {
             @ApiResponse(responseCode = "500", description = "Internal server error while generating invoices", content = @Content)
     })
     @PostMapping("/generate-invoices")
-    public ResponseEntity<byte[]> generateInvoicesFromRequest(@RequestBody GenerateInvoicesRequest request) {
+    public ResponseEntity<GenerateInvoicesResponse> generateInvoicesFromRequest(@RequestBody GenerateInvoicesRequest request) {
         var generatedInvoices = generateInvoicesFromRequestUseCase.generateInvoices(generateInvoicesMapper.toCommand(request));
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=customers.pdf")
                 .contentType(MediaType.APPLICATION_PDF)
-                .body(generatedInvoices.readAllBytes());
+                .body(generateInvoicesMapper.toResponse(generatedInvoices));
     }
 
     @Operation(
